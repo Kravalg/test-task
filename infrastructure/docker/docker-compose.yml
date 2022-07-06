@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  test-task-php-fpm:
+    dns:
+      - 8.8.8.8
+    build:
+      context: ../test-task/php-fpm
+    volumes:
+      - ${TEST_TASK_PATH_TO_PROJECT}:/app:cached
+      - ../test-task/php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
+    depends_on:
+      - test-task-mongo
+    working_dir: /app
+    networks:
+      - test-task
+
+  test-task-nginx:
+    image: nginx:1.20-alpine
+    restart: on-failure
+    working_dir: /app
+    volumes:
+      - ${LMS_SERVICE_PATH_TO_PROJECT}/public:/app:cached
+      - ../test-task/nginx/templates:/etc/nginx/templates:cached
+    depends_on:
+      - test-task-php-fpm
+    networks:
+      test-task:
+    environment:
+      - VIRTUAL_HOST=${TEST_TASK_SERVICE_DOMAIN}
+
+  test-task-mongo:
+    image: mongo:5.0
+    networks:
+      - test-task
+
+networks:
+  test-task:
