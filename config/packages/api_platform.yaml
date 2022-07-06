@@ -7,3 +7,5 @@ api_platform:
         versions: [3]
     title: 'Test Task API'
     version: '1.0.0'
+    resource_class_directories:
+        - '%kernel.project_dir%/src/Domain/Entity'
