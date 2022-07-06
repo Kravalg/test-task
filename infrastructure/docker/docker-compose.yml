@@ -5,10 +5,10 @@ services:
     dns:
       - 8.8.8.8
     build:
-      context: ../test-task/infrastructure/docker/php-fpm
+      context: php-fpm
     volumes:
       - ${TEST_TASK_PATH_TO_PROJECT}:/app:cached
-      - ../test-task/infrastructure/docker/php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
+      - ../infrastructure/docker/php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
     depends_on:
       - test-task-mongo
     working_dir: /app
@@ -21,7 +21,7 @@ services:
     working_dir: /app
     volumes:
       - ${TEST_TASK_PATH_TO_PROJECT}/public:/app:cached
-      - ../test-task/infrastructure/docker/nginx/templates:/etc/nginx/templates:cached
+      - ../infrastructure/docker/nginx/templates:/etc/nginx/templates:cached
     depends_on:
       - test-task-php-fpm
     networks:
@@ -31,6 +31,13 @@ services:
 
   test-task-mongo:
     image: mongo:5.0
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/apps/mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     networks:
       - test-task
 
