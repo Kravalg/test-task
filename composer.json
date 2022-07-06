@@ -1,4 +1,6 @@
 {
+    "name": "Test Task",
+    "description": "Test Task API",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
