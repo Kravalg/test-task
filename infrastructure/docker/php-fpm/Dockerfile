@@ -2,7 +2,7 @@ FROM php:7.4-fpm-alpine
 
 WORKDIR '/app'
 
-RUN apk add bash
+RUN apk add bash git
 RUN apk add --quiet autoconf make
 RUN docker-php-ext-enable opcache
 

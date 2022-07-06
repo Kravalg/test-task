@@ -8,7 +8,7 @@ services:
       context: php-fpm
     volumes:
       - ${TEST_TASK_PATH_TO_PROJECT}:/app:cached
-      - ../infrastructure/docker/php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
+      - ./php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
     depends_on:
       - test-task-mongo
     working_dir: /app
@@ -21,7 +21,7 @@ services:
     working_dir: /app
     volumes:
       - ${TEST_TASK_PATH_TO_PROJECT}/public:/app:cached
-      - ../infrastructure/docker/nginx/templates:/etc/nginx/templates:cached
+      - ./nginx/templates:/etc/nginx/templates:cached
     depends_on:
       - test-task-php-fpm
     networks:
