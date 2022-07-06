@@ -5,10 +5,10 @@ services:
     dns:
       - 8.8.8.8
     build:
-      context: ../test-task/php-fpm
+      context: ../test-task/infrastructure/docker/php-fpm
     volumes:
       - ${TEST_TASK_PATH_TO_PROJECT}:/app:cached
-      - ../test-task/php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
+      - ../test-task/infrastructure/docker/php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
     depends_on:
       - test-task-mongo
     working_dir: /app
@@ -20,8 +20,8 @@ services:
     restart: on-failure
     working_dir: /app
     volumes:
-      - ${LMS_SERVICE_PATH_TO_PROJECT}/public:/app:cached
-      - ../test-task/nginx/templates:/etc/nginx/templates:cached
+      - ${TEST_TASK_PATH_TO_PROJECT}/public:/app:cached
+      - ../test-task/infrastructure/docker/nginx/templates:/etc/nginx/templates:cached
     depends_on:
       - test-task-php-fpm
     networks:
