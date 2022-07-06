@@ -17,6 +17,8 @@ services:
 
   test-task-nginx:
     image: nginx:1.20-alpine
+    ports:
+      - 80:80
     restart: on-failure
     working_dir: /app
     volumes:
