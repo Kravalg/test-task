@@ -7,7 +7,7 @@ services:
     build:
       context: php-fpm
     volumes:
-      - ${TEST_TASK_PATH_TO_PROJECT}:/app:cached
+      - ../../:/app:cached
       - ./php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
     depends_on:
       - test-task-mongo
@@ -22,22 +22,26 @@ services:
     restart: on-failure
     working_dir: /app
     volumes:
-      - ${TEST_TASK_PATH_TO_PROJECT}/public:/app:cached
+      - ../..//public:/app:cached
       - ./nginx/templates:/etc/nginx/templates:cached
     depends_on:
       - test-task-php-fpm
     networks:
-      test-task:
+      - test-task
     environment:
       - VIRTUAL_HOST=${TEST_TASK_SERVICE_DOMAIN}
 
   test-task-mongo:
     image: mongo:5.0
+    restart: always
+    volumes:
+      - ./mongo/data:/data/db
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
       - 27017:27017
-    volumes:
-      - ~/apps/mongo:/data/db
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all" ]
     environment:
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     networks:
