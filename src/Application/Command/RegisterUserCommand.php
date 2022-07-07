@@ -40,8 +40,8 @@ class RegisterUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $email = $input->getArgument('email');
-        $password = $input->getArgument('password');
+        $email = (string) $input->getArgument('email');
+        $password = (string) $input->getArgument('password');
 
         $user = new User();
         $user->setEmail($email);

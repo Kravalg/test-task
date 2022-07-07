@@ -65,6 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     * @psalm-suppress MixedReturnTypeCoercion
      */
     public function getRoles(): array
     {
@@ -107,7 +108,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 }
