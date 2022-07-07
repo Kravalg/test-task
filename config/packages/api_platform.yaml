@@ -5,6 +5,10 @@ api_platform:
         json: ['application/merge-patch+json']
     swagger:
         versions: [3]
+        api_keys:
+            apiKey:
+                name: Authorization
+                type: header
     title: 'Test Task API'
     version: '1.0.0'
     resource_class_directories:

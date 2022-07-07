@@ -26,3 +26,7 @@
 ###< symfony/phpunit-bridge ###
 
 infrastructure/docker/mongo/data
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

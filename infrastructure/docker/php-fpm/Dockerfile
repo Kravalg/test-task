@@ -2,7 +2,7 @@ FROM php:7.4-fpm-alpine
 
 WORKDIR '/app'
 
-RUN apk add bash git gcc make g++ zlib-dev
+RUN apk add bash git gcc make g++ zlib-dev openssl
 RUN apk add --quiet autoconf make
 RUN docker-php-ext-enable opcache
 
