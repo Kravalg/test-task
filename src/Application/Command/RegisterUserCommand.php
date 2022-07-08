@@ -43,7 +43,9 @@ class RegisterUserCommand extends Command
         $email = (string) $input->getArgument('email');
         $password = (string) $input->getArgument('password');
 
-        $user = new User();
+        $userRepository = $this->objectManager->getRepository(User::class);
+
+        $user = $userRepository->findOneBy(['email' => $email]) ?? new User();
         $user->setEmail($email);
         $user->setPassword(
             $this->passwordHasher->hashPassword($user, $password)
@@ -52,7 +54,7 @@ class RegisterUserCommand extends Command
         $this->objectManager->persist($user);
         $this->objectManager->flush();
 
-        $io->success('User registered!');
+        $io->success('User registered or updated!');
 
         return Command::SUCCESS;
     }

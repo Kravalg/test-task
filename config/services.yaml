@@ -17,3 +17,16 @@ services:
     App\Application\Command\RegisterUserCommand:
         arguments:
             $objectManager: '@doctrine_mongodb.odm.default_document_manager'
+
+    App\Infrastructure\Doctrine\Listener\MovieSetOwnerListener:
+        tags:
+            -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
+
+    App\Infrastructure\Doctrine\Extension\MovieCurrentUserOwnerExtension:
+        tags:
+            - { name: api_platform.doctrine_mongodb.odm.aggregation_extension.collection }
+            - { name: api_platform.doctrine_mongodb.odm.aggregation_extension.item }
+
+    App\Infrastructure\EventSubscriber\NewMovieSubscriber:
+        arguments:
+            $sender: '%env(MAILER_SENDER)%'

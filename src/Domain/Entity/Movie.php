@@ -9,13 +9,19 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"movie", "ratings"}},
- *     denormalizationContext={"groups"={"movie", "ratings"}}
+ *     denormalizationContext={"groups"={"movie", "ratings"}},
+ *     itemOperations={
+ *       "get",
+ *       "put"= {"security_post_denormalize"= "object.owner == user"},
+ *       "patch"= {"security_post_denormalize"= "object.owner == user"},
+ *     },
  * )
  * @ODM\Document
  */
@@ -64,6 +70,11 @@ class Movie
      * @Groups("movie", "ratings")
      */
     private Collection $ratings;
+
+    /**
+     * @ODM\ReferenceOne(targetDocument=User::class, storeAs="id")
+     */
+    private ?UserInterface $owner = null;
 
     public function __construct()
     {
@@ -129,5 +140,15 @@ class Movie
     public function setRatings($ratings): void
     {
         $this->ratings = is_array($ratings) ? new ArrayCollection($ratings) : $ratings;
+    }
+
+    public function getOwner(): ?UserInterface
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(UserInterface $owner): void
+    {
+        $this->owner = $owner;
     }
 }

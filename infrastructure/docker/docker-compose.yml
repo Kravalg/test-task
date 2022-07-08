@@ -7,11 +7,18 @@ services:
     build:
       context: php-fpm
     volumes:
-      - ../../:/app:cached
+      - ../../:/app
       - ./php-fpm/conf.d/api-platform.ini:/usr/local/etc/php/php.ini:ro
     depends_on:
       - test-task-mongo
     working_dir: /app
+    networks:
+      - test-task
+
+  test-task-mailer:
+    image: schickling/mailcatcher
+    ports:
+      - 1080:1080
     networks:
       - test-task
 
@@ -22,7 +29,7 @@ services:
     restart: on-failure
     working_dir: /app
     volumes:
-      - ../..//public:/app:cached
+      - ../..//public:/app
       - ./nginx/templates:/etc/nginx/templates:cached
     depends_on:
       - test-task-php-fpm
