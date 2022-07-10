@@ -2,31 +2,26 @@
 
 namespace App\Application\Command;
 
-use App\Domain\Entity\User;
-use Doctrine\Persistence\ObjectManager;
+use App\Domain\Service\UserService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegisterUserCommand extends Command
 {
     protected static $defaultName = 'app:register-user';
     protected static $defaultDescription = 'Allows to create user';
 
-    private ObjectManager $objectManager;
-    private UserPasswordHasherInterface $passwordHasher;
+    private UserService $userService;
 
     public function __construct(
-        ObjectManager $objectManager,
-        UserPasswordHasherInterface $passwordHasher
+        UserService $userService
     ) {
         parent::__construct();
 
-        $this->objectManager = $objectManager;
-        $this->passwordHasher = $passwordHasher;
+        $this->userService = $userService;
     }
 
     protected function configure(): void
@@ -43,16 +38,7 @@ class RegisterUserCommand extends Command
         $email = (string) $input->getArgument('email');
         $password = (string) $input->getArgument('password');
 
-        $userRepository = $this->objectManager->getRepository(User::class);
-
-        $user = $userRepository->findOneBy(['email' => $email]) ?? new User();
-        $user->setEmail($email);
-        $user->setPassword(
-            $this->passwordHasher->hashPassword($user, $password)
-        );
-
-        $this->objectManager->persist($user);
-        $this->objectManager->flush();
+        $this->userService->createOrUpdate($email, $password);
 
         $io->success('User registered or updated!');
 
