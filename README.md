@@ -52,3 +52,5 @@ Automatically executed before every git push
 
 ## Contributing
 Read about [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
+Read about [Auto generating changelog](https://github.com/marcocesarato/php-conventional-changelog)
