@@ -8,7 +8,7 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-#/infrastructure/docker/.env
+/infrastructure/docker/.env
 .idea
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
@@ -19,11 +19,6 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
-
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
 
 infrastructure/docker/mongo/data
 
