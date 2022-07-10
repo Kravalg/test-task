@@ -4,6 +4,11 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [origin/main](https://github.com/Kravalg/test-task/compare/vorigin/main...vorigin/main) (2022-07-10)
+
+
+---
+
 ## [1.0.0](https://github.com/Kravalg/test-task/compare/6339cfb4657e9a856039ee5a1503387ce58b69c1...v1.0.0) (2022-07-10)
 
 ### Features

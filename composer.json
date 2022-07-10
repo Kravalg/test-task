@@ -98,5 +98,5 @@
         "symfony/phpunit-bridge": "^6.1",
         "vimeo/psalm": "^4.24"
     },
-    "version": "1.0.0"
+    "version": "origin/main"
 }
