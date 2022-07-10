@@ -8,7 +8,7 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-/infrastructure/docker/.env
+#/infrastructure/docker/.env
 .idea
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
