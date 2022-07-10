@@ -11,7 +11,9 @@ use App\Domain\Entity\User;
 use Doctrine\ODM\MongoDB\Aggregation\Builder;
 use Symfony\Component\Security\Core\Security;
 
-final class MovieCurrentUserOwnerExtension implements AggregationCollectionExtensionInterface, AggregationItemExtensionInterface
+final class MovieCurrentUserOwnerExtension implements
+    AggregationCollectionExtensionInterface,
+    AggregationItemExtensionInterface
 {
     private Security $security;
 
@@ -29,8 +31,13 @@ final class MovieCurrentUserOwnerExtension implements AggregationCollectionExten
         $this->addOwnerFilter($aggregationBuilder, $resourceClass);
     }
 
-    public function applyToItem(Builder $aggregationBuilder, string $resourceClass, array $identifiers, string $operationName = null, array &$context = []): void
-    {
+    public function applyToItem(
+        Builder $aggregationBuilder,
+        string $resourceClass,
+        array $identifiers,
+        string $operationName = null,
+        array &$context = []
+    ): void {
         $this->addOwnerFilter($aggregationBuilder, $resourceClass);
     }
 
